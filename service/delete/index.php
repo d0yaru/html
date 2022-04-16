@@ -4,7 +4,7 @@
 	$work = $_GET['work'];
 	// echo $id;
 	//----------------------------------------------------------------------------------------
-	// $link = mysqli_connect("localhost", "root", "", "jarvis");
+	// $link = mysqli_connect("localhost", "d0yaru", "lapalapa", "jarvis");
 
 	// $sql = "DELETE FROM `service` WHERE id = '$id'";
 	// $result = mysqli_query($link, $sql);

@@ -64,7 +64,7 @@
 		$projects_id = $_GET['projects_id'];
 		$projects = $_GET['projects'];
 		//----------------------------------------------------------------------------------------
-		$link = mysqli_connect("localhost", "root", "", "jarvis");
+		$link = mysqli_connect("localhost", "d0yaru", "lapalapa", "jarvis");
 
 		if ($link == false) {
 			print("Ошибка: Невозможно подключиться к MySQL " . mysqli_connect_error());
@@ -72,6 +72,7 @@
 		// else {
 		// 	print("Подключение к MySQL ... [ ok ]" . mysqli_connect_error());
 		// }
+		mysqli_set_charset($link, "utf8");// кирилица
 		//----------------------------------------------------------------------------------------
 		//////////////////////////////////////////////////////////////////////////////////////////
 		$sql = "SELECT `id`, `title` FROM `projects`";
@@ -89,22 +90,22 @@
 		print("<hr>");
 		//----------------------------------------------------------------------------------------
 		//////////////////////////////////////////////////////////////////////////////////////////
-		$sql = "SELECT `task`, `id`, `status` FROM `todolist` WHERE projects_id = '$projects_id'";
+		$sql = "SELECT `task`, `id`, `status`, `date` FROM `todolist` WHERE projects_id = '$projects_id'";
 		$result = mysqli_query($link, $sql);
 		//----------------------------------------------------------------------------------------
 		while ($row = mysqli_fetch_array($result)) {
 			if ($row['status'] == "_") {
-				print("<a href='update?id=" . $row['id'] . "&status=v&projects_id=" . $projects_id . "&projects=" . $projects . "'>[&#160;&#160;]</a> &nbsp;&nbsp;" . $row['task'] . "&nbsp;&nbsp;<a href='update?id=" . $row['id'] . "&status=r&projects_id=" . $projects_id . "&projects=" . $projects . "'>&#128274;</a><br>");
+				print("<a href='update?id=" . $row['id'] . "&status=v&projects_id=" . $projects_id . "&projects=" . $projects . "'>[&#160;&#160;]</a> &nbsp;&nbsp;" . $row['date'] . " ... " . $row['task'] . "&nbsp;&nbsp;<a href='update?id=" . $row['id'] . "&status=r&projects_id=" . $projects_id . "&projects=" . $projects . "'>&#128274;</a><br>");
 			}
 			else if ($row['status'] == "r") {
 				print("<form action='edit' method='GET' name='form'>");
-					print("<input name='projects_id' type='hidden' value='" . $projects_id . "'>");
-					print("<input name='projects' type='hidden' value='" . $projects . "'>");
-					print("&#128275; &nbsp;&nbsp;<input name='text_edit' type='text' value='" . $row['task'] . "'>&nbsp;&nbsp;<input name='id_edit' type='hidden' value='" . $row['id'] . "'> <input type='submit' name='btn_edit' value='&#10004;' class = 'btn'> <a href='delete?id=" . $row['id'] . "&projects_id=" . $projects_id . "&projects=" . $projects . "'>&#10060;</a><br>");
+					print("<input type='hidden' name='projects_id' value='" . $projects_id . "'>");
+					print("<input type='hidden' name='projects' value='" . $projects . "'>");
+					print("&#128275; &nbsp;&nbsp;<input type='date' name='date_edit' value='" . $row['date'] . "'> - <input type='text' name='text_edit' value='" . $row['task'] . "'>&nbsp;&nbsp;<input type='hidden' name='id_edit' value='" . $row['id'] . "'> <input type='submit' name='btn_edit' value='&#10004;' class = 'btn'> <a href='delete?id=" . $row['id'] . "&projects_id=" . $projects_id . "&projects=" . $projects . "'>&#10060;</a><br>");
 				print("</form>");
 			}
 			else if ($row['status'] == "v"){
-				print("<strike><i><a href='update?id=" . $row['id'] . "&status=_&projects_id=" . $projects_id . "&projects=" . $projects . "'>[&#10004;]</a> &nbsp;&nbsp;" . $row['task'] . "&nbsp;&nbsp;<a href='update?id=" . $row['id'] . "&status=r&projects_id=" . $projects_id . "&projects=" . $projects . "'>&#128274;</a></i></strike><br>");
+				print("<strike><i><a href='update?id=" . $row['id'] . "&status=_&projects_id=" . $projects_id . "&projects=" . $projects . "'>[&#10004;]</a> &nbsp;&nbsp;" . $row['date'] . " ... " . $row['task'] . "&nbsp;&nbsp;<a href='update?id=" . $row['id'] . "&status=r&projects_id=" . $projects_id . "&projects=" . $projects . "'>&#128274;</a></i></strike><br>");
 			}
 		}
 		//////////////////////////////////////////////////////////////////////////////////////////
@@ -112,9 +113,12 @@
 		
 		print("<hr>");
 		print("<form action='add' method='GET' name='form'>");
-			print("<input name='projects_id' type='hidden' value='" . $projects_id . "'>");
-			print("<input name='projects' type='hidden' value='" . $projects . "'>");
-			print("<input name='task' type='text' value=''>");
+			print("<input type='hidden' name='projects_id' value='" . $projects_id . "'>");
+			print("<input type='hidden' name='projects' value='" . $projects . "'>");
+			$date=date("Y-m-d");
+			print("<input type='date' name='date' value='" . $date . "'> ... ");
+			print("<input type='text' name='task' value='' required placeholder='Новая задача'> ");
+			print("<input type='submit' name='btn_add' value='&#10004;' class = 'btn'>");
 		print("</form>");
 		?>
 		<hr>

@@ -3,12 +3,13 @@
 	$work = $_GET['work'];
 	$date = $_GET['date'];
 	$task = $_GET['task'];
+	$client = $_GET['client'];
 	$price_add = $_GET['price_add'];
 	
 	//----------------------------------------------------------------------------------------
-	$link = mysqli_connect("localhost", "root", "", "jarvis");
+	$link = mysqli_connect("localhost", "d0yaru", "lapalapa", "jarvis");
 
-	$sql = "INSERT INTO `service` SET date = '$date', task = '$task', price = '$price_add', status = '_', work_id = '$work_id'";
+	$sql = "INSERT INTO `service` SET status = '_', date = '$date', task = '$task', client = '$client', price = '$price_add', work_id = '$work_id'";
 	$result = mysqli_query($link, $sql);
 
 	if ($result == false) {

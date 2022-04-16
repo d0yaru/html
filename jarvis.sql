@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 15 2022 г., 13:06
+-- Время создания: Апр 17 2022 г., 00:50
 -- Версия сервера: 5.7.33
 -- Версия PHP: 7.1.33
 
@@ -48,9 +48,10 @@ INSERT INTO `card` (`id`, `name`) VALUES
 CREATE TABLE `money` (
   `id` int(11) NOT NULL,
   `task` varchar(32) NOT NULL,
-  `price` int(11) NOT NULL,
-  `status` varchar(32) NOT NULL,
-  `card_id` int(11) NOT NULL
+  `price` int(11) NOT NULL DEFAULT '0',
+  `status` varchar(32) NOT NULL DEFAULT '_',
+  `card_id` int(11) NOT NULL DEFAULT '1',
+  `date` date NOT NULL DEFAULT '2022-01-01'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -79,11 +80,12 @@ INSERT INTO `projects` (`id`, `title`) VALUES
 
 CREATE TABLE `service` (
   `id` int(11) NOT NULL,
-  `task` varchar(32) DEFAULT NULL,
-  `price` varchar(32) DEFAULT NULL,
+  `task` varchar(32) NOT NULL,
+  `client` varchar(32) NOT NULL DEFAULT 'Неизвестно',
+  `price` int(11) NOT NULL DEFAULT '0',
   `status` varchar(32) NOT NULL DEFAULT '_',
-  `work_id` int(11) NOT NULL DEFAULT '0',
-  `date` varchar(32) NOT NULL DEFAULT '0'
+  `work_id` int(11) NOT NULL DEFAULT '1',
+  `date` date NOT NULL DEFAULT '2022-01-01'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -95,8 +97,9 @@ CREATE TABLE `service` (
 CREATE TABLE `todolist` (
   `id` int(11) NOT NULL,
   `task` varchar(32) NOT NULL,
-  `status` varchar(32) NOT NULL,
-  `projects_id` int(11) NOT NULL
+  `status` varchar(32) NOT NULL DEFAULT '_',
+  `projects_id` int(11) NOT NULL DEFAULT '1',
+  `date` date NOT NULL DEFAULT '2022-01-01'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

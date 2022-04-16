@@ -5,7 +5,7 @@
 	$work = $_GET['work'];
 	// echo $id;
 	//----------------------------------------------------------------------------------------
-	$link = mysqli_connect("localhost", "root", "", "jarvis");
+	$link = mysqli_connect("localhost", "d0yaru", "lapalapa", "jarvis");
 
 	$sql = "UPDATE `service` SET status = '$status' WHERE id = '$id'";
 

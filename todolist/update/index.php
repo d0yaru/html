@@ -5,7 +5,7 @@
 	$projects = $_GET['projects'];
 	// echo $id;
 	//----------------------------------------------------------------------------------------
-	$link = mysqli_connect("localhost", "root", "", "jarvis");
+	$link = mysqli_connect("localhost", "d0yaru", "lapalapa", "jarvis");
 
 	$sql = "UPDATE `todolist` SET status = '$status' WHERE id = '$id'";
 
